@@ -1,0 +1,217 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "params": [
+    {
+      "name": "year_selection",
+      "bind": {
+        "input": "select",
+        "options": [2020, 2021, 2022],
+        "name": "Select Year: "
+      },
+      "value": 2022
+    }
+  ],
+  "vconcat": [
+    {
+      "title": "Malaysia Domestic Water Consumption per 1,000 People",
+      "width": 1130,
+      "height": 450,
+      "projection": {
+        "type": "mercator",
+        "center": [108.58, 8.5],
+        "scale": 2850
+      },
+      "layer": [
+        {
+          "data": { "graticule": { "step": [1, 1] } },
+          "mark": { "type": "geoshape", "fill": null, "stroke": "lightgray" }
+        },
+        {
+          "data": {
+            "url": "https://raw.githubusercontent.com/YeeXuanNg/FIT3179-HomeworkWeek10/refs/heads/main/Malaysia_States.json",
+            "format": { "type": "topojson", "feature": "my" }
+          },
+          "transform": [
+            {
+              "lookup": "properties.name",
+              "from": {
+                "data": {
+                  "url": "https://raw.githubusercontent.com/YeeXuanNg/FIT3179-HomeworkWeek10/refs/heads/main/water_consumption_2020.csv"
+                },
+                "key": "state",
+                "fields": ["value"]
+              },
+              "as": ["value_2020"]
+            },
+            {
+              "lookup": "properties.name",
+              "from": {
+                "data": {
+                  "url": "https://raw.githubusercontent.com/YeeXuanNg/FIT3179-HomeworkWeek10/refs/heads/main/water_consumption_2021.csv"
+                },
+                "key": "state",
+                "fields": ["value"]
+              },
+              "as": ["value_2021"]
+            },
+            {
+              "lookup": "properties.name",
+              "from": {
+                "data": {
+                  "url": "https://raw.githubusercontent.com/YeeXuanNg/FIT3179-HomeworkWeek10/refs/heads/main/water_consumption_2022.csv"
+                },
+                "key": "state",
+                "fields": ["value"]
+              },
+              "as": ["value_2022"]
+            },
+            {
+              "lookup": "properties.name",
+              "from": {
+                "data": {
+                  "url": "https://raw.githubusercontent.com/YeeXuanNg/FIT3179-HomeworkWeek10/refs/heads/main/Population_2020.csv"
+                },
+                "key": "state",
+                "fields": ["population"]
+              },
+              "as": ["population_2020"]
+            },
+            {
+              "lookup": "properties.name",
+              "from": {
+                "data": {
+                  "url": "https://raw.githubusercontent.com/YeeXuanNg/FIT3179-HomeworkWeek10/refs/heads/main/Population_2021.csv"
+                },
+                "key": "state",
+                "fields": ["population"]
+              },
+              "as": ["population_2021"]
+            },
+            {
+              "lookup": "properties.name",
+              "from": {
+                "data": {
+                  "url": "https://raw.githubusercontent.com/YeeXuanNg/FIT3179-HomeworkWeek10/refs/heads/main/Population_2022.csv"
+                },
+                "key": "state",
+                "fields": ["population"]
+              },
+              "as": ["population_2022"]
+            },
+            {
+              "calculate": "year_selection == 2020 ? toNumber(datum.value_2020) : (year_selection == 2021 ? toNumber(datum.value_2021) : toNumber(datum.value_2022))",
+              "as": "value"
+            },
+            {
+              "calculate": "year_selection == 2020 ? toNumber(datum.population_2020) : (year_selection == 2021 ? toNumber(datum.population_2021) : toNumber(datum.population_2022))",
+              "as": "population"
+            },
+            { "calculate": "year_selection", "as": "selected_year" },
+            { "calculate": "datum.value / datum.population * 1000", "as": "water_per_1k" },
+            {
+              "calculate": "datum.value == null || datum.value == '' || isNaN(datum.value) ? 'Data is not available' : format(datum.value,'')",
+              "as": "value_display"
+            },
+            {
+              "calculate": "datum['water_per_1k'] == 0 || datum['water_per_1k'] == null || !isFinite(datum['water_per_1k']) ? 'Data is not available' : format(datum['water_per_1k'],'.2f')",
+              "as": "consumption_display"
+            },
+            {
+              "calculate": "datum.population == null || datum.population == '' || isNaN(datum.population) ? 'Data is not available' : format(datum.population, '.1f')",
+              "as": "population_display"
+            },
+            {
+              "calculate": "datum.value != null && datum.value != '' && !isNaN(datum.value) && datum.population != null && !isNaN(datum.population)",
+              "as": "hasData"
+            }
+          ],
+          "mark": { "type": "geoshape", "stroke": "white" },
+          "encoding": {
+            "color": {
+              "condition": {
+                "test": "datum.hasData",
+                "field": "water_per_1k",
+                "type": "quantitative",
+                "scale": { "scheme": "blues" },
+                "legend": { "title": "MLD per 1,000 people" }
+              },
+              "value": "#808080"
+            },
+            "tooltip": [
+              { "field": "properties.name", "title": "State" },
+              { "field": "selected_year", "title": "Year" },
+              { "field": "value_display", "title": "Total Domestic (MLD)" },
+              { "field": "population_display", "title": "Population (Thousands)" },
+              { "field": "consumption_display", "title": "MLD per 1,000 people" }
+            ]
+          }
+        },
+        {
+          "data": {
+            "values": [
+              { "lon": 102.5, "dot_lon": 101.5, "lat": 3.26, "dot_lat": 3.3, "text": "Selangor consumes 3.41 times more water per capita than Sabah, the highest in the country.", "year": 2020 },
+              { "lon": 116.3, "dot_lon": 116.8, "lat": 5.2, "dot_lat": 5.2, "text": "Sabah has the lowest consumption at 91.55 MLD per 1,000 people.", "year": 2020 },
+              { "lon": 101.5, "dot_lon": 101.5, "lat": 3.26, "dot_lat": 3.3, "text": "Selangor increased 4.6% from the previous year, remaining the highest.", "year": 2021 },
+              { "lon": 100.8, "dot_lon": 100.5, "lat": 4.7, "dot_lat": 5.3, "text": "Pulau Pinang was the second-highest with 314.37 MLD per 1,000 people.", "year": 2021 },
+              { "lon": 116.5, "dot_lon": 116.8, "lat": 5.2, "dot_lat": 5.2, "text": "Sabah increased 36% from the previous year.", "year": 2021 },
+              { "lon": 102.5, "dot_lon": 101.5, "lat": 3.26, "dot_lat": 3.3, "text": "Selangor has the highest domestic water consumption, at 316.30 MLD per 1,000 people.", "year": 2022 },
+              { "lon": 102.8, "dot_lon": 102.1, "lat": 5.5, "dot_lat": 5.4, "text": "Kelantan has the lowest at 88.50 MLD per 1,000 people—less than 30% of Selangor's consumption.", "year": 2022 },
+              { "lon": 110.7, "dot_lon": 116.8, "lat": 4.9, "dot_lat": 5.4, "text": "East Malaysian states (Sabah and Sarawak):", "year": 2022 },
+              { "lon": 112.2, "dot_lon": 113.8, "lat": 4.7, "dot_lat": 2.8, "text": "These states show lower consumption rates, with Sabah at only 115.38 MLD.", "year": 2022 }
+            ]
+          },
+          "transform": [{ "filter": "datum.year == year_selection" }],
+          "layer": [
+            {
+              "mark": { "type": "point", "filled": true, "size": 100, "color": "red" },
+              "encoding": {
+                "longitude": { "field": "dot_lon", "type": "quantitative" },
+                "latitude": { "field": "dot_lat", "type": "quantitative" }
+              }
+            },
+            {
+              "mark": { "type": "text", "align": "center", "baseline": "middle", "fontSize": 10, "fontWeight": "bold", "color": "darkorange", "dy": -15 },
+              "encoding": {
+                "longitude": { "field": "lon", "type": "quantitative" },
+                "latitude": { "field": "lat", "type": "quantitative" },
+                "text": { "field": "text" }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": { "text": "Water Production in Malaysia" },
+      "width": 1130,
+      "height": 450,
+      "data": { "url": "https://raw.githubusercontent.com/YeeXuanNg/FIT3179-HomeworkWeek10/refs/heads/main/water_production.csv" },
+      "transform": [
+        { "calculate": "year(toDate(datum.date))", "as": "year" },
+        { "filter": "datum.year == year_selection" }
+      ],
+      "layer": [
+        {
+          "mark": { "type": "bar", "color": "#4C78A8" },
+          "encoding": {
+            "x": { "field": "value", "type": "quantitative", "title": "Water Production (MLD)" },
+            "y": { "field": "state", "type": "nominal", "title": "State", "sort": "-x" },
+            "tooltip": [
+              { "field": "state", "title": "State" },
+              { "field": "year", "title": "Year" },
+              { "field": "value", "title": "Water Production (MLD)", "format": "," }
+            ]
+          }
+        },
+        {
+          "mark": { "type": "text", "align": "right", "baseline": "middle", "dx": -3, "fontSize": 12, "color": "white" },
+          "encoding": {
+            "x": { "field": "value", "type": "quantitative" },
+            "y": { "field": "state", "type": "nominal", "sort": "-x" },
+            "text": { "field": "value", "type": "quantitative", "format": ",.0f" }
+          }
+        }
+      ]
+    }
+  ]
+}
