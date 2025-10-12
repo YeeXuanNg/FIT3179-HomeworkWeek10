@@ -151,11 +151,15 @@
             "values": [
               { "lon": 102.5, "dot_lon": 101.5, "lat": 3.26, "dot_lat": 3.3, "text": "Selangor consumes 3.41 times more water per capita than Sabah, the highest in the country.", "year": 2020 },
               { "lon": 116.3, "dot_lon": 116.8, "lat": 5.2, "dot_lat": 5.2, "text": "Sabah has the lowest consumption at 91.55 MLD per 1,000 people.", "year": 2020 },
-              { "lon": 101.5, "dot_lon": 101.5, "lat": 3.26, "dot_lat": 3.3, "text": "Selangor increased 4.6% from the previous year, remaining the highest.", "year": 2021 },
-              { "lon": 100.8, "dot_lon": 100.5, "lat": 4.7, "dot_lat": 5.3, "text": "Pulau Pinang was the second-highest with 314.37 MLD per 1,000 people.", "year": 2021 },
-              { "lon": 116.5, "dot_lon": 116.8, "lat": 5.2, "dot_lat": 5.2, "text": "Sabah increased 36% from the previous year.", "year": 2021 },
-              { "lon": 102.5, "dot_lon": 101.5, "lat": 3.26, "dot_lat": 3.3, "text": "Selangor has the highest domestic water consumption, at 316.30 MLD per 1,000 people.", "year": 2022 },
-              { "lon": 102.8, "dot_lon": 102.1, "lat": 5.5, "dot_lat": 5.4, "text": "Kelantan has the lowest at 88.50 MLD per 1,000 people—less than 30% of Selangor's consumption.", "year": 2022 },
+              { "lon": 99.3, "dot_lon": 101.5, "lat": 3.26, "dot_lat": 3.3, "text": "Selangor increased 4.6% from the", "year": 2021 },
+              { "lon": 99.3, "dot_lon": 101.5, "lat": 3.1, "dot_lat": 3.3, "text": "previous year, remaining the highest.", "year": 2021 },
+              { "lon": 98.9, "dot_lon": 100.5, "lat": 4.7, "dot_lat": 5.3, "text": "Pulau Pinang was the second", "year": 2021 },
+              { "lon": 99.5, "dot_lon": 100.5, "lat": 4.5, "dot_lat": 5.3, "text": "highest with 314.37 MLD per 1,000 people.", "year": 2021 },
+              { "lon": 113.7, "dot_lon": 116.4, "lat": 5.5, "dot_lat": 5.5, "text": "Sabah increased 36% from the previous year.", "year": 2021 },
+              { "lon": 100.5, "dot_lon": 101.5, "lat": 3.26, "dot_lat": 3.3, "text": "Selangor has the highest domestic water consumption", "year": 2022 },
+              { "lon": 99.4, "dot_lon": 101.5, "lat": 3.05, "dot_lat": 3.3, "text": "at 316.30 MLD per 1,000 people.", "year": 2022 },
+              { "lon": 105.2, "dot_lon": 102.2, "lat": 5.8, "dot_lat": 5.8, "text": "Kelantan has the lowest at 88.50 MLD per 1,000 people—", "year": 2022 },
+              { "lon": 104.6, "dot_lon": 102.2, "lat": 5.6, "dot_lat": 5.8, "text": "less than 30% of Selangor's consumption.", "year": 2022 },
               { "lon": 110.7, "dot_lon": 116.8, "lat": 4.9, "dot_lat": 5.4, "text": "East Malaysian states (Sabah and Sarawak):", "year": 2022 },
               { "lon": 112.2, "dot_lon": 113.8, "lat": 4.7, "dot_lat": 2.8, "text": "These states show lower consumption rates, with Sabah at only 115.38 MLD.", "year": 2022 }
             ]
